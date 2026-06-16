@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../controllers/auth_controller.dart';
 import '../../models/subject.dart';
 import '../../models/user.dart';
+import '../../screens/course_list_screen.dart'; // ← new import
 import '../detail/detail_screen.dart';
 import '../login/login_screen.dart';
 
@@ -60,12 +61,14 @@ class DashboardScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          // ── User profile card ────────────────────────────────────────────
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: colorScheme.outlineVariant.withOpacity(0.6)),
+              border: Border.all(
+                  color: colorScheme.outlineVariant.withOpacity(0.6)),
             ),
             child: Row(
               children: [
@@ -89,7 +92,8 @@ class DashboardScreen extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         user.email,
-                        style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
+                        style: textTheme.bodyMedium
+                            ?.copyWith(color: colorScheme.onSurfaceVariant),
                       ),
                     ],
                   ),
@@ -98,23 +102,65 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 28),
+
+          // ── My Courses banner ────────────────────────────────────────────
+          Text('My Courses', style: textTheme.titleMedium),
+          const SizedBox(height: 10),
+          Card(
+            color: colorScheme.primaryContainer,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              leading: CircleAvatar(
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
+                child: const Icon(Icons.library_books),
+              ),
+              title: Text(
+                'Browse & Manage Courses',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: colorScheme.onPrimaryContainer,
+                ),
+              ),
+              subtitle: Text(
+                'Add, edit, or delete courses via API',
+                style: TextStyle(color: colorScheme.onPrimaryContainer),
+              ),
+              trailing: Icon(Icons.chevron_right,
+                  color: colorScheme.onPrimaryContainer),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CourseListScreen()),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 28),
+
+          // ── Subjects ─────────────────────────────────────────────────────
           Text('Subjects', style: textTheme.titleMedium),
           const SizedBox(height: 10),
           ..._subjects.map(
             (subject) => Card(
               child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 leading: CircleAvatar(
                   backgroundColor: colorScheme.secondaryContainer,
                   foregroundColor: colorScheme.onSecondaryContainer,
                   child: Icon(subject.icon),
                 ),
-                title: Text(subject.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                title: Text(subject.name,
+                    style: const TextStyle(fontWeight: FontWeight.w600)),
                 subtitle: Text(subject.schedule),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => DetailScreen(subject: subject)),
+                    MaterialPageRoute(
+                        builder: (_) => DetailScreen(subject: subject)),
                   );
                 },
               ),
