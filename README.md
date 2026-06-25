@@ -1,15 +1,6 @@
-# Student Authentication & Dashboard App
-
-<!-- Replace the title above with whatever your assignment brief calls it -->
-
-**Student Name:** Muhammad Ahsan
-**Student ID:** SE-221099 SE-8B
-
-## Description
-
-A Flutter app demonstrating user registration, login, and navigation between
-screens, with form validation and a "Remember Me" session that persists
-across app restarts via SharedPreferences.
+Name: Abdul Rehman Paracha
+ID: SE-221068
+Class: 8B
 
 ## Features
 
@@ -23,13 +14,6 @@ across app restarts via SharedPreferences.
 - Detail screen showing static info for a tapped subject.
 - Logout that clears the remembered session and returns to Login.
 
-## Setup
-
-```
-flutter pub get
-flutter run
-```
-
 ## Screenshots
 
 | Register                                     | Login                                  |
@@ -39,21 +23,3 @@ flutter run
 | Dashboard                                      | Detail                                   |
 | ---------------------------------------------- | ---------------------------------------- |
 | ![Dashboard screen](screenshots/dashboard.png) | ![Detail screen](screenshots/detail.png) |
-
-## Project Structure
-
-```
-lib/
-├── main.dart
-├── theme/           AppTheme — colors, typography, input/button/card styling
-├── models/          User, Subject
-├── enums/           Gender, AuthState
-├── validators/      Validators (pure Dart)
-├── controllers/     AuthController (in-memory session + SharedPreferences)
-├── widgets/         CustomTextField, CustomButton
-└── screens/
-    ├── register/
-    ├── login/
-    ├── dashboard/
-    └── detail/
-```

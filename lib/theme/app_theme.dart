@@ -1,28 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Single source of truth for the app's look. Screens and widgets don't
-/// define their own colors/borders/text styles — they just use
-/// `Theme.of(context)` (or, for buttons/inputs, nothing at all) and pick
-/// this up automatically.
 class AppTheme {
   AppTheme._();
 
-  static const _seedColor = Color(0xFF6366F1); // indigo
-  static const scaffoldBackground = Color(0xFFF7F7FB);
+  static const _seedColor = Color(0xFF059669); // emerald green
+  static const _accentTeal = Color(0xFF0D9488); // teal accent
+  static const scaffoldBackground = Color(0xFFF0FDF9); // very light mint
 
   static ThemeData get light {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: _seedColor,
       brightness: Brightness.light,
+    ).copyWith(
+      primary: _seedColor,
+      secondary: _accentTeal,
+      tertiary: const Color(0xFF6EE7B7), // light emerald
+      surface: Colors.white,
+      surfaceContainerHighest: const Color(0xFFD1FAE5), // mint surface
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
     );
 
-    final baseTextTheme = GoogleFonts.plusJakartaSansTextTheme();
+    final baseTextTheme = GoogleFonts.interTextTheme();
     final textTheme = baseTextTheme.copyWith(
-      headlineSmall: baseTextTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
-      titleLarge: baseTextTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-      titleMedium: baseTextTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-      bodyMedium: baseTextTheme.bodyMedium?.copyWith(height: 1.45),
+      headlineSmall: baseTextTheme.headlineSmall?.copyWith(
+        fontWeight: FontWeight.w700,
+        color: const Color(0xFF064E3B), // deep emerald
+      ),
+      titleLarge: baseTextTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.w700,
+        color: const Color(0xFF064E3B),
+      ),
+      titleMedium: baseTextTheme.titleMedium?.copyWith(
+        fontWeight: FontWeight.w600,
+        color: const Color(0xFF065F46),
+      ),
+      bodyMedium: baseTextTheme.bodyMedium?.copyWith(
+        height: 1.45,
+        color: const Color(0xFF374151),
+      ),
+      bodySmall: baseTextTheme.bodySmall?.copyWith(
+        color: const Color(0xFF6B7280),
+      ),
     );
 
     final radius = BorderRadius.circular(14);
@@ -32,29 +52,37 @@ class AppTheme {
       colorScheme: colorScheme,
       scaffoldBackgroundColor: scaffoldBackground,
       textTheme: textTheme,
+
+      // ── AppBar ──────────────────────────────────────────────────────────
       appBarTheme: AppBarTheme(
         backgroundColor: scaffoldBackground,
-        foregroundColor: colorScheme.onSurface,
+        foregroundColor: const Color(0xFF064E3B),
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: textTheme.titleLarge?.copyWith(color: colorScheme.onSurface),
+        titleTextStyle: textTheme.titleLarge?.copyWith(
+          color: const Color(0xFF064E3B),
+        ),
+        iconTheme: const IconThemeData(color: Color(0xFF059669)),
       ),
+
+      // ── Input fields ─────────────────────────────────────────────────────
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
         border: OutlineInputBorder(
           borderRadius: radius,
-          borderSide: BorderSide(color: colorScheme.outlineVariant),
+          borderSide: const BorderSide(color: Color(0xFFD1FAE5)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: radius,
-          borderSide: BorderSide(color: colorScheme.outlineVariant),
+          borderSide: const BorderSide(color: Color(0xFFA7F3D0)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: radius,
-          borderSide: BorderSide(color: colorScheme.primary, width: 1.6),
+          borderSide: const BorderSide(color: Color(0xFF059669), width: 1.6),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: radius,
@@ -65,29 +93,78 @@ class AppTheme {
           borderSide: BorderSide(color: colorScheme.error, width: 1.6),
         ),
       ),
+
+      // ── Elevated buttons ──────────────────────────────────────────────────
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.primary,
-          foregroundColor: colorScheme.onPrimary,
-          disabledBackgroundColor: colorScheme.primary.withOpacity(0.35),
-          disabledForegroundColor: colorScheme.onPrimary.withOpacity(0.7),
+          backgroundColor: _seedColor,
+          foregroundColor: Colors.white,
+          disabledBackgroundColor: _seedColor.withOpacity(0.35),
+          disabledForegroundColor: Colors.white.withOpacity(0.7),
           minimumSize: const Size.fromHeight(52),
           elevation: 0,
           shape: RoundedRectangleBorder(borderRadius: radius),
-          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
         ),
       ),
+
+      // ── Text buttons ──────────────────────────────────────────────────────
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: _seedColor,
+          textStyle: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+      ),
+
+      // ── FAB ───────────────────────────────────────────────────────────────
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: _seedColor,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+
+      // ── Cards ─────────────────────────────────────────────────────────────
       cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 0,
         margin: const EdgeInsets.symmetric(vertical: 6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: colorScheme.outlineVariant.withOpacity(0.6)),
+          side: const BorderSide(color: Color(0xFFD1FAE5)),
         ),
       ),
+
+      // ── Checkbox ──────────────────────────────────────────────────────────
       checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return _seedColor;
+          return null;
+        }),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      ),
+
+      // ── Chip ──────────────────────────────────────────────────────────────
+      chipTheme: ChipThemeData(
+        backgroundColor: const Color(0xFFD1FAE5),
+        labelStyle: const TextStyle(color: Color(0xFF065F46)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+
+      // ── Divider ───────────────────────────────────────────────────────────
+      dividerTheme: const DividerThemeData(
+        color: Color(0xFFD1FAE5),
+        thickness: 1,
+      ),
+
+      // ── SnackBar ──────────────────────────────────────────────────────────
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: const Color(0xFF064E3B),
+        contentTextStyle: const TextStyle(color: Colors.white),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }
